@@ -1,22 +1,29 @@
+let russelData;
+$.get('js/Russell_3000_Intraday.txt', function(data) {
+    russelData = data;
+    //console.log(russelData);
 
+    let dataArray = russelData.split('\n');
 
-jQuery.get('http://www.kibot.com/Files/2/Russell_3000_Intraday.txt', function(data) {
-var myvar = data;
+    let tickerListString = [];
+
+    dataArray.forEach(function (line) {
+        // hacky, but should only filter out non-ticker lines
+        if (line.length > 50) {
+            tickerListString.push(line);
+        }
+    });
+    tickerListString.splice(0, 1);
+    console.log(tickerListString);
+
+    let tickerList = [];
+    tickerListString.forEach(function (tickerString) {
+        tickerList.push(CreateTickerFromString(tickerString));
+    });
+    console.log(tickerList);
 });
 
-
-var arrayLength = myvar.length;
-
-for (i = 0; i < arrayLength; i++) {
-  function isUpperCase(str) {
-      return str === str.toUpperCase();
-  }
-
-  // initialize array
-  var tickerlist = [];
-
-  // append new value to the array
-  tickerlist.push(i);
+function CreateTickerFromString(tickerString) {
+    let arr = tickerString.split('\t');
+    return new Ticker(arr[1], arr[2], arr[3], arr[4], arr[5], arr[6]);
 }
-
-console.log(tickerlist);
