@@ -21,6 +21,7 @@ $.get('js/Russell_3000_Intraday.txt', function(data) {
         tickerList.push(CreateTickerFromString(tickerString));
     });
     console.log(tickerList);
+    ChartDrawer(tickerList.slice(0, 10))
 });
 
 function CreateTickerFromString(tickerString) {

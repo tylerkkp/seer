@@ -6,6 +6,7 @@ class Ticker {
         this.Exchange = exchange;
         this.Industry = industry;
         this.Sector = sector;
+        this.Latest = 0;
     }
 
     LogTickerInformation() {
@@ -23,7 +24,7 @@ class Ticker {
 
             let responseArray = JSON.parse(response);
             let responseObject = responseArray[0];
-            this.Latest = responseObject["l"];
+            this.Latest = parseFloat(responseObject["l"]);
         }
         catch (e) {
             console.log("error " + e);
